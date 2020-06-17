@@ -1,12 +1,16 @@
 'use strict';
 const express = require('express');
 // Constants
-const PORT = 8080;
-const HOST = 'localhost';
+const PORT = 8080; // todo: use env var
+const HOST = '0.0.0.0'; // todo: this is important, localhost won't work etc
 // App
 const app = express();
+// kubernetes readiness and liveness checks
 app.get('/', (req, res) => {
-res.send('Hello world\n');
+  console.log('req :>> ', req);
+  res.status(200).send('OK')
 });
+
 app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+
+console.log(`Started server.js with host:${HOST} port:${PORT}`);

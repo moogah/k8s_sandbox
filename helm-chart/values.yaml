@@ -5,13 +5,7 @@
 replicaCount: 1
 
 node_server:
-  repository: jefarr/k8s_sandbox_server
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart version.
-  tag: "latest"
-
-node_client:
-  repository: jefarr/k8s_sandbox_client
+  repository: moogah/k8s_sandbox_server
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart version.
   tag: "latest"
@@ -44,8 +38,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: NodePort
-  exposePort: 30001 # this is the port our service will be available on (ie in a web browser)
+  type: ClusterIP
   targetPort: 8080 # give to container on port 8080
   port: 80 # pod listening on port 80
 

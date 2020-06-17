@@ -1,12 +1,16 @@
 version: "3.4"
 services:
   server:
-    image: jefarr/k8s_sandbox_server:latest
+    image: moogah/k8s_sandbox_server:latest
     build:
       context: ./server
       dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
   client:
-    image: jefarr/k8s_sandbox_client:latest
+    image: moogah/k8s_sandbox_client:latest
     build:
       context: ./client
       dockerfile: Dockerfile
+    ports:
+      - "8081:8081"      
