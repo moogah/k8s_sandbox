@@ -3,9 +3,12 @@ replicaCount: 1
 nodeserver:
   repository: jefarr/k8s_sandbox_server
   pullPolicy: Always
-  # Overrides the image tag whose default is the chart version.
   tag: "latest"
 
+nodeclient:
+  repository: jefarr/k8s_sandbox_client
+  pullPolicy: Always
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -34,6 +37,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
+  name: backend-service
   type: ClusterIP
   targetPort: 8080 # give to container on port 8080
   port: 8080 # pod listening on port 8080

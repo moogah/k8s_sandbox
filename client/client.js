@@ -2,11 +2,15 @@
 const express = require('express');
 // Constants
 const PORT = 8081;
-const HOST = '0.0.0.0';
+const MESSAGE = process.env.CLIENT_MESSAGE;
+const BACKEND_SERVICE = process.env.BACKEND_SERVICE;
+const BACKEND_PORT = process.env.BACKEND_PORT;
+
 // App
 const app = express();
 app.get('/', (req, res) => {
-  res.send('Hello world\n');
+  console.log('client req :>> ', req);
+  res.send(`Client Message: ${MESSAGE}\nBackend Service Address: ${BACKEND_SERVICE}\nBackend Port: ${BACKEND_PORT}\n`);
 });
-app.listen(PORT, HOST);
-console.log(`Started client.js with host:${HOST} port:${PORT}`);
+app.listen(PORT);
+console.log(`Started client.js with port:${PORT}`);

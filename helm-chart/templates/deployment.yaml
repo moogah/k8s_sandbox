@@ -28,7 +28,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: nodeserver
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.nodeserver.repository }}"
@@ -36,6 +36,32 @@ spec:
           ports:
             - name: http
               containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+        - name: nodeclient
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.nodeclient.repository }}"
+          imagePullPolicy: {{ .Values.nodeclient.pullPolicy }}
+          env:
+            - name: BACKEND_SERVICE
+              value: "backend-serv"
+            - name: CLIENT_MESSAGE
+              value: "Hello from the client"
+          ports:
+            - name: http
+              containerPort: 8081
               protocol: TCP
           livenessProbe:
             httpGet:
